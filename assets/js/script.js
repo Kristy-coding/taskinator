@@ -19,7 +19,17 @@ var taskFormHandler = function(event){
     //this variable targets the task-type attribute of the select element, then finds it's value propert in the DOM and tartets that
     var taskTypeInput = document.querySelector("select[name='task-type']").value;
     console.log(taskTypeInput); 
-    
+
+    //VALIDATE USER INPUT//
+    //check if input values are empty strings
+    if(!taskNameInput || !taskTypeInput){
+        alert("You need to fill out the task form!");
+        return false;
+    }
+
+    // form will resest to default values after a task is submited
+    formEl.reset();
+
     //package up data as an object
     var taskDataObj = {
         name: taskNameInput,
