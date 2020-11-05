@@ -14,6 +14,8 @@ var tasksInProgressEl = document.querySelector("#tasks-in-progress");
 
 var tasksCompletedEl = document.querySelector("#tasks-completed");
 
+var tasks = [];
+
 // this will help us to assign a unique ID to tasks as they get created (using the html data-* attribute)
 var taskIdCounter = 0;
 
@@ -53,7 +55,8 @@ var taskFormHandler = function(event){
 
         var taskDataObj = {
             name: taskNameInput,
-            type: taskTypeInput
+            type: taskTypeInput,
+            status: "to do"
         };
 
         createTaskEl(taskDataObj);
@@ -83,6 +86,10 @@ var createTaskEl = function(taskDataObj) {
     // this takes the listItem dom element we dynamically created and adds to it the taskInfoEl dom element that we dynamically created 
     listItemEl.appendChild(taskInfoEl);
 
+    taskDataObj.id = taskIdCounter;
+
+    tasks.push(taskDataObj);
+
     //createTaskActions() returns a DOM element that we can store in a variable...taskActionsEl
     var taskActionsEl = createTaskActions(taskIdCounter);
     listItemEl.appendChild(taskActionsEl);
@@ -92,6 +99,9 @@ var createTaskEl = function(taskDataObj) {
 
     // increase task counter for next unique id
     taskIdCounter++;
+
+    console.log(taskDataObj);
+    console.log(taskDataObj.status);
 
 };
 
@@ -199,6 +209,14 @@ var completeEditTask = function(taskName, taskType, taskId) {
     //set new values 
     taskSelected.querySelector("h3.task-name").textContent = taskName;
     taskSelected.querySelector("span.task-type").textContent = taskType;
+
+    // loop throught tasks array and task object with new content
+    for (var i= 0; i < tasks.length; i++){
+        if (tasks[i].id === parseInt(taskId)){
+            task[i].name = taskName;
+            task[i].type = taskType;
+        }
+    };
 
     alert("Task Updated!");
     
